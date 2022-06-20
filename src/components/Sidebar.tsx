@@ -38,13 +38,12 @@ import { ReactText } from "react";
 interface LinkItemProps {
   name: string;
   icon: IconType;
+  routh: string;
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Home", icon: FiHome },
-  { name: "Trending", icon: FiTrendingUp },
-  { name: "Explore", icon: FiCompass },
-  { name: "Favourites", icon: FiStar },
-  { name: "Settings", icon: FiSettings },
+  { name: "Usuários", icon: FiHome, routh: "/" },
+  { name: "Posts", icon: FiTrendingUp, routh: "/posts" },
+  { name: "Produtos", icon: FiTrendingUp, routh: "/products" },
 ];
 
 export default function Sidebar({ children }: { children: ReactNode }) {
@@ -100,7 +99,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem routh={link.routh} key={link.name} icon={link.icon}>
           {link.name}
         </NavItem>
       ))}
@@ -111,11 +110,18 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 interface NavItemProps extends FlexProps {
   icon: IconType;
   children: ReactText;
+  routh: string;
 }
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({
+  icon,
+  children,
+  roundedTopRight,
+  routh,
+  ...rest
+}: NavItemProps) => {
   return (
     <Link
-      href="#"
+      href={routh}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >

@@ -15,22 +15,14 @@ const Home = () => {
     width: 196px;
     color: ${renderPage ? "#000000" : "#A3B8B0"};
   `;
-  const Button1 = styled.button`
-    border-bottom: 2px solid ${renderPage ? "#A3B8B0" : "#22e0a1"};
-    width: 196px;
-    color: ${renderPage ? "#A3B8B0" : "#000000"};
-  `;
+
   return (
     <Box p={24}>
-      <Text fontSize="22px" fontWeight={600}>
-        Organização
-      </Text>
-      <Box w="1008px" bg="white">
+      <Box borderRadius={8} w="1008px" bg="white">
         <Flex p={8}>
-          <Button onClick={handleRenderPage}>Colaboradores</Button>
-          <Button1 onClick={handleRenderPage}>Cargos</Button1>
+          <Button onClick={handleRenderPage}>Usuários</Button>
         </Flex>
-        {renderPage ? <EMployeesList /> : <RolesList />}
+        <EMployeesList />
       </Box>
     </Box>
   );

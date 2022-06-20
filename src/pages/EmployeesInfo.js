@@ -8,32 +8,32 @@ import {
 } from "react-icons/ai";
 import axios from "axios";
 import { FiPhoneCall } from "react-icons/fi";
+import { BsDroplet } from "react-icons/bs";
+import { useParams } from "react-router-dom";
 
 const EmployeesInfo = () => {
+  const { id } = useParams();
+
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
     const response = await axios
-      .get(" https://pp-api-desafio.herokuapp.com/agent/1")
+      .get(`https://dummyjson.com/users/${id}`)
       .catch((err) => console.log(err));
 
     if (response) {
-      const data = response.data.agent;
+      const data = response.data;
 
-      console.log("Data da api em accounts: ", data);
+      console.log("Data em userInfo: ", data);
       setData(data);
     }
   };
-  const DDD = data.phone ? data.phone.ddd : null;
-  const DDI = data.phone ? data.phone.ddi : null;
-  const NUM = data.phone ? data.phone.number : null;
-  const phoneNumber = DDI + " " + DDD + " " + NUM;
 
-  const statusFn = () => {
-    if (data.status == "active") {
-      return "Ativo";
+  const genderFunc = () => {
+    if (data.gender === "male") {
+      return "Masculino";
     } else {
-      return "Inativo";
+      return "Feminino";
     }
   };
 
@@ -48,36 +48,73 @@ const EmployeesInfo = () => {
         </Link>
 
         <Text m={2} fontSize="22px" fontWeight={600}>
-          Detalhes do Colaborador
+          Perfil do Usuário
         </Text>
       </Flex>
 
-      <Box p={8} bg="white" w="956px" h="598px">
+      <Box p={8} bg="white" borderRadius={8} w="956px" h="898px">
         <Flex>
           <Avatar src={data.image} />
           <Flex mx={4} flexDir="column" justifyContent="center">
-            <Text>{data.name}</Text>
+            <Text>
+              {data.firstName} {data.maidenName} {data.lastName}
+            </Text>
             <Text>{data.email}</Text>
           </Flex>
         </Flex>
         <Flex my={12} justifyContent="space-between">
           <EmployeesCards
-            title={data.document ? data.document.type : null}
-            subTitle={data.document ? data.document.number : null}
-            icon={<AiOutlineIdcard />}
+            title="Tipo Sanguíneo"
+            subTitle={data.bloodGroup}
+            icon={<BsDroplet />}
           />
           <EmployeesCards
             title="Telefone"
-            subTitle={phoneNumber}
+            subTitle={data.phone}
             icon={<FiPhoneCall />}
           />
           <EmployeesCards
             title="Nascimento"
-            subTitle={data.birth_date}
+            subTitle={data.birthDate}
             icon={<AiOutlineCalendar />}
           />
         </Flex>
 
+        <Flex
+          bg="#F5FAF8"
+          ml={12}
+          mb={8}
+          borderRadius="8px"
+          w={800}
+          h="280px"
+          border="1px solid #CAD6D1"
+          flexDir="column"
+          justifyContent="space-around"
+          p={6}
+          boxShadow="lg"
+        >
+          <Text fontWeight={600} fontSize={22} mb={4}>
+            Informações Pessoais
+          </Text>
+          <Text fontWeight={500} fontSize="18px">
+            Nome de Usuário: {data.username}
+          </Text>
+          <Text fontWeight={500} fontSize="18px">
+            Departamento: {data.company ? data.company.department : null}
+          </Text>
+          <Text fontWeight={500} fontSize="18px">
+            Cargo: {data.company ? data.company.title : null}
+          </Text>
+          <Text fontWeight={500} fontSize="18px">
+            Gênero: {genderFunc()}
+          </Text>
+          <Text fontWeight={500} fontSize="18px">
+            Idade: {data.age}
+          </Text>
+          <Text fontWeight={500} fontSize="18px">
+            Altura: {data.height}cm
+          </Text>
+        </Flex>
         <Flex
           ml={12}
           borderRadius="8px"
@@ -88,20 +125,19 @@ const EmployeesInfo = () => {
           justifyContent="space-around"
           p={6}
           boxShadow="lg"
-          bg="white"
+          bg="#F5FAF8"
         >
-          <Box></Box>
-          <Text fontWeight={500} fontSize="18px">
-            Departamento: {data.department}
+          <Text fontWeight={600} fontSize={22} mb={4}>
+            Endereço
           </Text>
           <Text fontWeight={500} fontSize="18px">
-            Cargo: {data.role}
+            Rua: {data.address ? data.address.address : null}
           </Text>
           <Text fontWeight={500} fontSize="18px">
-            Unidade: {data.branch}
+            Cidade: {data.address ? data.address.city : null}
           </Text>
           <Text fontWeight={500} fontSize="18px">
-            Status: {statusFn()}
+            Estado: {data.address ? data.address.state : null}
           </Text>
         </Flex>
       </Box>

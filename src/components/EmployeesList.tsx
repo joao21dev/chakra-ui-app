@@ -1,11 +1,19 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-import { Avatar, Box, Center, Checkbox, Flex, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Center,
+  Checkbox,
+  Flex,
+  Text,
+  Link,
+} from "@chakra-ui/react";
 import { AiFillEye } from "react-icons/ai";
 import { FaTrashAlt } from "react-icons/fa";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { BsDownload } from "react-icons/bs";
+// import { Link } from "react-router-dom";
+import { BsDownload, BsEye } from "react-icons/bs";
 import { CustomTable } from "./CustomTable";
 
 const EMployeesList = () => {
@@ -17,11 +25,11 @@ const EMployeesList = () => {
     console.log(userData);
 
     const response = await axios
-      .get("https://pp-api-desafio.herokuapp.com/agents")
+      .get("https://dummyjson.com/users")
       .catch((err) => console.log(err));
 
     if (response) {
-      const data = response.data.items;
+      const data = response.data.users;
 
       console.log("Data da api em accounts: ", data);
       setData(data);
@@ -39,49 +47,49 @@ const EMployeesList = () => {
         columns: [
           {
             Header: "ID",
-            accessor: "agent_id",
+            accessor: "id",
           },
           {
             Header: "Nome Completo",
             accessor: "name",
+
             Cell: (props: any) => (
               <Flex>
                 <Center>
                   <Avatar size={"sm"} src={props.row.original.image} />
-                  <Text ml={2}>{props.cell.row.cells[1].value}</Text>
+                  <Text ml={2}>
+                    {props.row.original.firstName} {props.row.original.lastName}
+                    {console.log("props: ", props.row.original.firstName)}
+                  </Text>
                 </Center>
               </Flex>
-
-              // props.cell.row.cells[4].value
             ),
           },
           {
             Header: "Departamento",
-            accessor: "department",
+            accessor: "company.department",
           },
           {
             Header: "Cargo",
-            accessor: "role",
+            accessor: "company.title",
           },
           {
-            Header: "Unidadde",
-            accessor: "branch",
+            Header: "Cidade",
+            accessor: "address.city",
           },
           {
-            Header: "Status",
-            accessor: "status",
-            Cell: (props) => (
-              <Box
-                borderRadius={15}
-                w="70px"
-                bg={
-                  props.cell.row.cells[4].value === "active" ? "#B5F1DD" : "#EAEFED"
-                }
-              >
-                <Text color={"#34423D"} textAlign="center">
-                  {props.cell.row.cells[4].value === "active" ? "Ativo" : "Inativo"}
-                </Text>
+            Header: "Estado",
+            accessor: "address.state",
+          },
+          {
+            Header: "Detalhes",
+            Cell: (props: any) => (
+              <Box cursor="pointer">
+                <Link href={`employee/${props.cell.row.cells[0].value}`}>
+                  <BsEye fontSize="26px" color={"gray"} />
+                </Link>
               </Box>
+
               // props.cell.row.cells[4].value
             ),
           },
