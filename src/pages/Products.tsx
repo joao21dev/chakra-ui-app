@@ -20,13 +20,20 @@ const Products = () => {
     }
   };
 
+  interface ProductI {
+    price: number;
+    title: string;
+    images: string;
+    rating: number;
+  }
+
   useEffect(() => {
     fetchData();
     // fetchUserData();
   }, []);
   return (
     <div>
-      {data.map((product) => (
+      {data.map((product: ProductI) => (
         <ProductsCards
           price={product.price}
           name={product.title}

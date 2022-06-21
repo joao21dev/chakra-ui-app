@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ChartCards from "../components/ChartCards";
 import PostsCards from "../components/PostsCard";
+import { PostI } from "../types";
 
 const Posts = () => {
   const [data, setData] = useState([]);
@@ -20,20 +21,21 @@ const Posts = () => {
     }
   };
 
+
+
   useEffect(() => {
     fetchData();
     // fetchUserData();
   }, []);
   return (
     <div>
-      {data.map((post) => (
+      {data.map((post: PostI) => (
         <PostsCards
           id={post.userId}
           title={post.title}
           body={post.body}
           reactions={post.reactions}
-          tags={post.tags}
-        />
+          tags={post.tags} userId={0}        />
       ))}
     </div>
   );

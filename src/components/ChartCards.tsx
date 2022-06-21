@@ -15,11 +15,10 @@ import {
 import { FiDollarSign, FiUser, FiUserCheck } from "react-icons/fi";
 
 import axios from "axios";
+import { CardI } from "../types";
 
 const ChartCards = () => {
-  const [valor, setValor] = useState("valor");
-
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any>([]);
 
   const fetchData = async () => {
     const response = await axios

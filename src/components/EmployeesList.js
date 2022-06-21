@@ -8,12 +8,17 @@ import {
   Flex,
   Text,
   Link,
+  Button,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from "@chakra-ui/react";
 import { AiFillEye } from "react-icons/ai";
 import { FaTrashAlt } from "react-icons/fa";
 import axios from "axios";
 // import { Link } from "react-router-dom";
-import { BsDownload, BsEye } from "react-icons/bs";
+import { BsDownload, BsEye, BsTrash } from "react-icons/bs";
 import { CustomTable } from "./CustomTable";
 
 const EMployeesList = () => {
@@ -36,6 +41,8 @@ const EMployeesList = () => {
     }
   };
 
+  
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -53,7 +60,7 @@ const EMployeesList = () => {
             Header: "Nome Completo",
             accessor: "name",
 
-            Cell: (props: any) => (
+            Cell: (props) => (
               <Flex>
                 <Center>
                   <Avatar size={"sm"} src={props.row.original.image} />
@@ -83,11 +90,33 @@ const EMployeesList = () => {
           },
           {
             Header: "Detalhes",
-            Cell: (props: any) => (
+            Cell: (props) => (
               <Box cursor="pointer">
                 <Link href={`employee/${props.cell.row.cells[0].value}`}>
                   <BsEye fontSize="26px" color={"gray"} />
                 </Link>
+              </Box>
+
+              // props.cell.row.cells[4].value
+            ),
+          },
+          {
+            Header: "Excluir",
+            Cell: (props) => (
+              <Box
+                onClick={() =>
+                  axios
+                    .delete(
+                      `https://dummyjson.com/users/${props.cell.row.cells[0].value}`
+                    )
+                    .then((res) => {
+                      console.log("res: ", res);
+                      console.log("res.data: ", res.data.id);
+                    })
+                }
+                cursor="pointer"
+              >
+                <BsTrash fontSize="26px" color={"gray"} />
               </Box>
 
               // props.cell.row.cells[4].value
@@ -101,6 +130,23 @@ const EMployeesList = () => {
 
   return (
     <>
+      <Alert
+        status="success"
+        variant="subtle"
+        flexDirection="column"
+        justifyContent="center"
+        textAlign="center"
+        height="200px"
+      >
+        <AlertIcon w="40px" h="40px" mr={0} />
+        <AlertTitle mt={4} mb={1} fontSize="lg">
+          Application submitted!
+        </AlertTitle>
+        <AlertDescription maxWidth="sm">
+          Thanks for submitting your application. Our team will get back to you
+          soon.
+        </AlertDescription>
+      </Alert>
       <CustomTable data={data} columns={columns} />
     </>
   );

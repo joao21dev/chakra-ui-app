@@ -1,8 +1,9 @@
 import { Box, Center, Flex, Text } from "@chakra-ui/react";
 
 import React from "react";
+import { EmployeeI } from "../types";
 
-const EmployeesCards = (props) => {
+const EmployeesCards = (props: EmployeeI) => {
   return (
     <Flex
       alignItems="center"

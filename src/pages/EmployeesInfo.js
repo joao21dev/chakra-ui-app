@@ -1,4 +1,12 @@
-import { Avatar, Box, Center, Flex, Link, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Center,
+  Flex,
+  Link,
+  Text,
+} from "@chakra-ui/react";
 import React, { useEffect, useMemo, useState } from "react";
 import EmployeesCards from "../components/EmployeesCards";
 import {
@@ -37,6 +45,13 @@ const EmployeesInfo = () => {
     }
   };
 
+  const deleteUser = () => {
+    axios.delete(`https://dummyjson.com/users/${id}`).then((res) => {
+      console.log("res: ", res);
+      console.log("res.data: ", res.data.id);
+    });
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -55,11 +70,17 @@ const EmployeesInfo = () => {
       <Box p={8} bg="white" borderRadius={8} w="956px" h="898px">
         <Flex>
           <Avatar src={data.image} />
-          <Flex mx={4} flexDir="column" justifyContent="center">
+          <Flex w="90%" mx={4} flexDir="column" justifyContent="center">
             <Text>
               {data.firstName} {data.maidenName} {data.lastName}
             </Text>
             <Text>{data.email}</Text>
+          </Flex>
+          <Flex>
+            <Button onClick={deleteUser} mr={4}>
+              Delete
+            </Button>
+            <Button>Delete</Button>
           </Flex>
         </Flex>
         <Flex my={12} justifyContent="space-between">

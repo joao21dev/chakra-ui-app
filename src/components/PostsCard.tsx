@@ -12,8 +12,9 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { GoThumbsup } from "react-icons/go";
+import { PostI } from "../types";
 
-export default function PostsCards(props) {
+export default function PostsCards(props: PostI) {
   return (
     <Center py={6}>
       <Box
@@ -53,7 +54,6 @@ export default function PostsCards(props) {
           fontSize={14}
           textAlign={"center"}
           fontWeight={600}
-         
         >
           Perfil do Usuário
         </Link>

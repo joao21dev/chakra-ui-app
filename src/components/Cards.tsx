@@ -1,8 +1,10 @@
 import React from "react";
 
+import { CardI, PostI } from "../types";
+
 import { Box, Center, Text, Stack, Icon } from "@chakra-ui/react";
 
-const Card = (props) => {
+const Card = (props: CardI) => {
   return (
     <Center>
       <Box w={"full"}>
